@@ -1,0 +1,21 @@
+<h1>Listing os_releases</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @os_releases.each do |os_release| %>
+  <tr>
+    <td><%= link_to 'Show', os_release %></td>
+    <td><%= link_to 'Edit', edit_os_release_path(os_release) %></td>
+    <td><%= link_to 'Destroy', os_release, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Os release', new_os_release_path %>

@@ -1,0 +1,6 @@
+== Quickie app to demonstrate issue #400
+
+This is a minimal app to show an issue with the same
+outward appearance as #400. It's an app of mine whittled down to its bare 
+essentials (and upgraded to rails 4.2 just to eliminate olde gems being
+the culprit).
