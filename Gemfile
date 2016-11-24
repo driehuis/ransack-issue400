@@ -40,3 +40,4 @@ gem 'jquery-rails'
 gem "minitest-rails", "~> 2.0"
 gem "ransack"
 gem "protected_attributes"
+gem "byebug"
