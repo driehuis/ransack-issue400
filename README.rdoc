@@ -11,9 +11,9 @@ The issue can be shown using
 When run from the browser by visiting http://localhost:3000/hosts, this shows
 in the console:
 
-Completed 500 Internal Server Error in 29ms (ActiveRecord: 1.6ms)
+ Completed 500 Internal Server Error in 29ms (ActiveRecord: 1.6ms)
 
-ActionView::Template::Error (undefined method `name' for nil:NilClass):
+ ActionView::Template::Error (undefined method `name' for nil:NilClass):
     1: <h1>Listing hosts</h1>
     2: 
     3: <%= search_form_for @search, url: search_hosts_path, html: {method: :post} do |f| %>
@@ -27,30 +27,29 @@ ActionView::Template::Error (undefined method `name' for nil:NilClass):
 
 The top of the stack trace is:
 
-ransack (1.8.2) lib/ransack/nodes/condition.rb:189:in `key'
-ransack (1.8.2) lib/ransack/nodes/grouping.rb:52:in `block in []'
-ransack (1.8.2) lib/ransack/nodes/grouping.rb:52:in `each'
-ransack (1.8.2) lib/ransack/nodes/grouping.rb:52:in `detect'
-ransack (1.8.2) lib/ransack/nodes/grouping.rb:52:in `[]'
-ransack (1.8.2) lib/ransack/nodes/grouping.rb:186:in `read_attribute'
-ransack (1.8.2) lib/ransack/nodes/grouping.rb:122:in `method_missing'
-ransack (1.8.2) lib/ransack/search.rb:98:in `method_missing'
-ransack (1.8.2) lib/ransack/helpers/form_builder.rb:10:in `value'
-actionview (4.2.7.1) lib/action_view/helpers/tags/select.rb:16:in `block in render'
-actionview (4.2.7.1) lib/action_view/helpers/tags/select.rb:16:in `fetch'
-actionview (4.2.7.1) lib/action_view/helpers/tags/select.rb:16:in `render'
-actionview (4.2.7.1) lib/action_view/helpers/form_options_helper.rb:163:in `select'
-actionview (4.2.7.1) lib/action_view/helpers/form_options_helper.rb:777:in `select'
-app/views/hosts/index.html.erb:4:in `block in _app_views_hosts_index_html_erb___2532205141213101223_69980050519440'
-
+ ransack (1.8.2) lib/ransack/nodes/condition.rb:189:in `key'
+ ransack (1.8.2) lib/ransack/nodes/grouping.rb:52:in `block in []'
+ ransack (1.8.2) lib/ransack/nodes/grouping.rb:52:in `each'
+ ransack (1.8.2) lib/ransack/nodes/grouping.rb:52:in `detect'
+ ransack (1.8.2) lib/ransack/nodes/grouping.rb:52:in `[]'
+ ransack (1.8.2) lib/ransack/nodes/grouping.rb:186:in `read_attribute'
+ ransack (1.8.2) lib/ransack/nodes/grouping.rb:122:in `method_missing'
+ ransack (1.8.2) lib/ransack/search.rb:98:in `method_missing'
+ ransack (1.8.2) lib/ransack/helpers/form_builder.rb:10:in `value'
+ actionview (4.2.7.1) lib/action_view/helpers/tags/select.rb:16:in `block in render'
+ actionview (4.2.7.1) lib/action_view/helpers/tags/select.rb:16:in `fetch'
+ actionview (4.2.7.1) lib/action_view/helpers/tags/select.rb:16:in `render'
+ actionview (4.2.7.1) lib/action_view/helpers/form_options_helper.rb:163:in `select'
+ actionview (4.2.7.1) lib/action_view/helpers/form_options_helper.rb:777:in `select'
+ app/views/hosts/index.html.erb:4:in `block in _app_views_hosts_index_html_erb___2532205141213101223_69980050519440'
 
 I have been unable to reproduce the issue without rails, e.g. by calling Host.ransack directly:
 
-irb(main):001:0> Host.all.ransack(os_release_id_eq: 1)
-=> Ransack::Search<class: Host, base: Grouping <conditions: [Condition <attributes: ["os_release_id"], predicate: eq, values: [1]>], combinator: and>>
-irb(main):002:0> Host.all.ransack(os_release_id_eq: 1).result
-  Host Load (0.3ms)  SELECT "hosts".* FROM "hosts" WHERE "hosts"."os_release_id" = 1
-=> #<ActiveRecord::Relation [#<Host id: 1, fqdn: "server1", os_release_id: 1>]>
+ irb(main):001:0> Host.all.ransack(os_release_id_eq: 1)
+ => Ransack::Search<class: Host, base: Grouping <conditions: [Condition <attributes: ["os_release_id"], predicate: eq, values: [1]>], combinator: and>>
+ irb(main):002:0> Host.all.ransack(os_release_id_eq: 1).result
+   Host Load (0.3ms)  SELECT "hosts".* FROM "hosts" WHERE "hosts"."os_release_id" = 1
+ => #<ActiveRecord::Relation [#<Host id: 1, fqdn: "server1", os_release_id: 1>]>
 
 That seems to indicate that, even though I'm obviously doing
 something wrong, it's not the syntax of the predicate. I've only
