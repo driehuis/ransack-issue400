@@ -1,7 +1,7 @@
 <h1>Listing hosts</h1>
 
 <%= search_form_for @search, url: search_hosts_path, html: {method: :post} do |f| %>
-  <%# f.select :os_release_id_eq, options_from_collection_for_select(OsRelease.all, :id, :name), include_blank: true %>
+  <% f.select :os_release_xame_eq, options_from_collection_for_select(OsRelease.all, :id, :name), include_blank: true %>
   <%= f.condition_fields do |c| %>
     <div class="field">
       <%= c.attribute_fields do |a| %>
